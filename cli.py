@@ -71,6 +71,20 @@ def sequential_recp(args):
                 print(f"Received \"{data.decode()}\" from {interface}:{port}")
 
 
+# media data format
+# +-------+-------------------------------------------------+
+# | index | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 
+# +-------+-------------------------------------------------+
+# |  desc | x | x | x | x | y | y | y | y | r | g |  b |  f | 
+# +-------+-------------------------------------------------+
+# x: x-coordinate (32-bit integer big-endian)
+# y: y-coordinate (32-bit integer big-endian)
+# r: red
+# g: green
+# b: blue
+# f: flag (0: init, 128: put pixel, 255: cleanup)
+
+
 def media_send(args):
     ip = socket.gethostbyname(socket.gethostname())
     print(f"Host IPv4: {ip}")
@@ -130,7 +144,6 @@ def media_send(args):
 def media_recp(args):
     ip = socket.gethostbyname(socket.gethostname())
     print(f"Host IPv4: {ip}")
-
 
     # TCP socket
     if args.mode == "tcp":
